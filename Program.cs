@@ -4,9 +4,18 @@ using rtvnaloga.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Connect to the database
+var usedConnectionKey = builder.Configuration["ConnectionStrings:UsedDbConnection"];
+if (usedConnectionKey == null )
+{
+    throw new ArgumentException("Connection string not found!");
+}
+var usedConnectionString = builder.Configuration.GetConnectionString(usedConnectionKey);
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbConnection")));
+    options.UseSqlServer(usedConnectionString));
+
+
+// Add services to the container.
 
 builder.Services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
 builder.Services.AddScoped<IAccountHeaderRepository, AccountHeaderRepository>();

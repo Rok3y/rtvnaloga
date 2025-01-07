@@ -1,6 +1,5 @@
 @rtvnaloga_HostAddress = http://localhost:5081
 
-GET {{rtvnaloga_HostAddress}}/weatherforecast/
-Accept: application/json
+
 
 ###
