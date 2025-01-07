@@ -40,13 +40,20 @@ In visual studio open package manager console and run:
 
 #### API service
 
-Build `rtvnaloga` and run it from command line (rtvnaloga\bin\Debug\net8.0\rtvnaloga.exe) or in visual studio by pressing F5.
+Build `rtvnaloga` and run it from command line:
+
+> rtvnaloga\bin\Debug\net8.0\rtvnaloga.exe program.exe --urls "http://localhost:5081"
+
+or in visual studio by pressing F5.
+
 To access API documentation open web browser and navigat to:
 > http://localhost:5081/swagger/index.html
 
 #### WEB UI
 
 Navigate to `repos\rtvnaloga\WebUI` folder and run:
+> npm install
+
 > ng serve
 
 Open web page at:
