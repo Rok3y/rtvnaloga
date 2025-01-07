@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using rtvnaloga.Models;
 using rtvnaloga.Services;
 
@@ -28,7 +29,7 @@ namespace rtvnaloga.Controllers
             return Ok(Invoices);
         }
 
-        // GET: api/
+        // GET: api/Invoices
         [HttpGet("id")]
         public async Task<IActionResult> GetByInvoiceId(int id)
         {
@@ -41,6 +42,21 @@ namespace rtvnaloga.Controllers
             }
 
             return Ok(Invoice);
+        }
+
+        // GET: api/Invoices
+        [HttpGet("accountId")]
+        public async Task<IActionResult> GetInvoicesByAccountId(int id)
+        {
+            _logger.LogInformation("GET request for Invoices with account ID {Id}", id);
+            var Invoices = await _invoiceItemRepository.GetAllByAccountId(id);
+            if (Invoices.IsNullOrEmpty())
+            {
+                _logger.LogWarning($"Invoice with ID {id} not found");
+                return NotFound();
+            }
+
+            return Ok(Invoices);
         }
 
         // POST: api/Invoices

@@ -50,6 +50,12 @@ namespace rtvnaloga.Data
             return await _context.InvoiceItems.FindAsync(id);
         }
 
+        public async Task<IReadOnlyList<InvoiceItem>> GetAllByAccountId(int id)
+        {
+            _logger.LogInformation($"Fetching all invoice items for account {id}");
+            return await _context.InvoiceItems.Where(i => i.AccountHeaderId == id).ToListAsync();
+        }
+
         public async Task UpdateAsync(InvoiceItem entity)
         {
             _logger.LogInformation($"Updating invoice item with ID {entity.Id}");

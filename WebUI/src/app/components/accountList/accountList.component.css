@@ -1,0 +1,9 @@
+.clickable-row {
+    cursor: pointer;
+  }
+
+  .rounded-table {
+    border-spacing: 0;         /* Ensures borders meet edge-to-edge */
+    border-radius: 0.5rem;     /* Or whatever radius you prefer */
+    overflow: hidden;          /* So the table corners are actually clipped */
+  }

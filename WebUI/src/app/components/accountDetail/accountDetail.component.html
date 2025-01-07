@@ -1,0 +1,186 @@
+<div *ngIf="account">
+  <h2>Podatki o računu (ID: {{ account.id }})</h2>
+
+  <div class="row ">
+    <!-- First column -->
+    <div class="col-md-6">
+      <!-- Field 1: Number -->
+      <div class="row mb-3">
+        <label for="number" class="col-sm-4 col-form-label"><strong>Številka računa:</strong></label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            id="number"
+            [value]="account.number"
+            readonly
+          />
+        </div>
+      </div>
+
+      <!-- Field 2: Date/Time -->
+      <div class="row mb-3">
+        <label for="dateTime" class="col-sm-4 col-form-label"><strong>Datum/Čas:</strong></label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            id="dateTime"
+            [value]="account.dateTime"
+            readonly
+          />
+        </div>
+      </div>
+
+      <!-- Field 3: Currency -->
+      <div class="row mb-3">
+        <label for="currency" class="col-sm-4 col-form-label"><strong>Valuta:</strong></label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            id="currency"
+            [value]="account.currency"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Second column -->
+    <div class="col-md-6">
+      <!-- Field 4: Recipient Name -->
+      <div class="row mb-3">
+        <label for="recipientName" class="col-sm-5 col-form-label"><strong>Naziv:</strong></label>
+        <div class="col-sm-7">
+          <input
+            type="text"
+            class="form-control"
+            id="recipientName"
+            [value]="account.recipientName"
+            readonly
+          />
+        </div>
+      </div>
+
+      <!-- Field 5: Recipient Address -->
+      <div class="row mb-3">
+        <label for="recipientAddress" class="col-sm-5 col-form-label"><strong>Naslov:</strong></label>
+        <div class="col-sm-7">
+          <input
+            type="text"
+            class="form-control"
+            id="recipientAddress"
+            [value]="account.recipientAddress"
+            readonly
+          />
+        </div>
+      </div>
+
+      <!-- Field 6: Recipient Location -->
+      <div class="row mb-3">
+        <label for="recipientLocation" class="col-sm-5 col-form-label"><strong>Kraj:</strong></label>
+        <div class="col-sm-7">
+          <input
+            type="text"
+            class="form-control"
+            id="recipientLocation"
+            [value]="account.recipientLocation"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+    
+  <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+    <table class="table table-light table-hover table-responsive table-bordered table-sm rounded-table">
+      <thead>
+        <tr>
+          <th scope="col">Naziv postavke</th>
+          <th scope="col">Cena</th>
+          <th scope="col">Količina</th>
+          <th scope="col">Skupaj</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoices">
+          <td>{{ invoice.itemName }}</td>
+          <td>{{ invoice.price }}</td>
+          <td>{{ invoice.amount }}</td>
+          <td>{{ invoice.amount * invoice.price | number:'1.1-1'}}</td>
+          <td>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + invoice.id">
+              Briši</button>
+          </td>
+
+          <div
+          class="modal fade"
+          [id]="'deleteModal' + invoice.id"
+          tabindex="-1"
+          aria-labelledby="deleteModalLabel"
+          aria-hidden="true"
+          >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">
+                  Potrdi izbris
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Ali res želite izbristai postavko: <strong>{{ invoice.itemName }}</strong>?
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Prekliči
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                  (click)="onDeleteInvoice(invoice.id)"
+                >
+                  Izbriši
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="!invoices || invoices.length === 0">
+    <p>Za ta račun ni postavk.</p>
+  </div>
+
+  <div class="row justify-content-end mb-3">
+    <div class="col-auto">
+      <label for="currency" class="col-form-label">
+        <strong>Znesek:</strong>
+      </label>
+    </div>
+  
+    <div class="col-auto">
+      <input
+        type="text"
+        class="form-control"
+        id="currency"
+        [value]="totalAmount | number:'1.1-1'"
+        readonly
+      />
+    </div>
+  </div>
+  
+

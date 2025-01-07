@@ -1,0 +1,35 @@
+<div class="main">
+  <!-- <h2 style="color: white; background-color: #3363AD;">Računi</h2> -->
+  <h2 >Računi</h2>
+  <h2 *ngIf="selectedAccountId === null" style="color: rgb(255, 76, 76);">Izberi Račun</h2>
+  <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+    <table class="table table-light table-hover table-responsive table-bordered table-sm rounded-table">
+      <thead>
+        <tr>
+          <th scope="col" class="clickable-row" (click)="sortBy('number')">Številka računa 
+            <span *ngIf="sortColumn === 'number'">
+              {{ sortDirection === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th scope="col" class="clickable-row" (click)="sortBy('dateTime')">Datum/Čas
+            <span *ngIf="sortColumn === 'dateTime'">
+              {{ sortDirection === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th scope="col" class="clickable-row" (click)="sortBy('recipientName')">Prejemnik
+            <span *ngIf="sortColumn === 'recipientName'">
+              {{ sortDirection === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let acc of accounts" (click)="onSelectAccount(acc.id)" class="clickable-row" [class.table-active]="acc.id === selectedAccountId">
+          <td>{{ acc.number }}</td>
+          <td>{{ acc.dateTime }}</td>
+          <td>{{ acc.recipientName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
